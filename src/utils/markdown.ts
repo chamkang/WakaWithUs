@@ -2,9 +2,10 @@ import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
 
-const postsDirectory = join(process.cwd(), "markdown/Blog");
+const postsDirectory = join(process.cwd(), "markdown/blog");
 
 export function getPostSlugs() {
+  if (!fs.existsSync(postsDirectory)) return [];
   return fs.readdirSync(postsDirectory);
 }
 
