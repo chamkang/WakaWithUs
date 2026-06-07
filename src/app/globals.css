@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent any element from causing horizontal scroll on mobile
+   (clip doesn't create a scroll container, so sticky positioning still works) */
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+:root {
+  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-lora: "Lora", Georgia, serif;
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+}
+
+body {
+  @apply bg-ivory text-midnight_text;
+  font-family: var(--font-dm-sans);
+}
+
+/* Section defaults — each section sets its own bg explicitly */
+section {
+  @apply bg-ivory;
+}
+
+/* Dark sections override */
+.section-dark {
+  @apply bg-darkmode;
+}
+
+/* ───────────────────────────────────────────────
+   DARK MODE
+   Flip the light surfaces/text utilities globally so
+   every page adapts without touching each component.
+   Always-dark surfaces (bg-ink / bg-darkmode / bg-night,
+   text-white) are intentionally left untouched.
+   ─────────────────────────────────────────────── */
+html.dark { color-scheme: dark; }
+
+.dark body { background-color: #16100a; color: #f4eee6; }
+.dark section { background-color: #16100a; }
+
+/* Light surfaces -> dark */
+.dark .bg-white { background-color: #1f1810 !important; }
+.dark .bg-cloud { background-color: #16100a !important; }
+.dark .bg-ivory { background-color: #16100a !important; }
+.dark section.bg-ivory { background-color: #16100a !important; }
+
+/* Text */
+.dark .text-ink { color: #f4eee6 !important; }
+.dark .text-midnight_text { color: #f4eee6 !important; }
+.dark .text-stone { color: #b2a79a !important; }
+.dark .text-caramel { color: #b2a79a !important; }
+
+/* Borders */
+.dark .border-line { border-color: #3a2e22 !important; }
+.dark .border-border { border-color: #3a2e22 !important; }
+
+/* Form controls */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #15100a !important;
+  color: #f4eee6 !important;
+}
+
+/* Smooth theme transition */
+body, section, header, footer, a, button,
+.bg-white, .bg-cloud, .bg-ivory, .border-line, .text-ink, .text-stone {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Blog content styling */
+.blog-details p, .blog-details hr {
+  @apply mb-8;
+}
+
+.blog-details hr {
+  @apply border-border;
+}
+
+.blog-details strong {
+  @apply font-bold text-midnight_text;
+}
+
+.blog-details ul {
+  @apply mb-8 list-inside list-disc space-y-3;
+}
+
+.blog-details ol {
+  @apply mb-8 list-inside list-decimal space-y-3;
+}
+
+.blog-details h1 {
+  @apply mb-8 text-3xl font-bold text-midnight_text sm:text-4xl md:text-[40px] md:leading-[1.28] font-playfair;
+}
+
+.blog-details h2 {
+  @apply mb-8 text-2xl font-bold text-midnight_text sm:text-3xl md:text-[35px] md:leading-[1.28] font-lora;
+}
+
+.blog-details h3 {
+  @apply mb-6 text-2xl font-bold text-midnight_text sm:text-[28px] sm:leading-[40px] font-lora;
+}
+
+/* Animated underline for nav links */
+.nav-underline {
+  @apply relative;
+}
+.nav-underline::after {
+  content: '';
+  @apply absolute bottom-0 left-0 h-0.5 bg-primary w-0 transition-all duration-300;
+}
+.nav-underline:hover::after {
+  @apply w-full;
+}
+
+/* Trip card hover */
+.trip-card {
+  @apply transition-all duration-300;
+  transform-style: preserve-3d;
+}
+.trip-card:hover {
+  @apply shadow-trip-card;
+  transform: translateY(-8px);
+}
+
+/* Sun Orange restraint — only for accent elements */
+.price-badge {
+  @apply bg-energy text-white font-bold;
+}
+
+/* WhatsApp float button pulse */
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(45, 106, 79, 0); }
+}
+.wa-float {
+  animation: wa-pulse 3s infinite;
+}
