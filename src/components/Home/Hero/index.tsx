@@ -15,13 +15,13 @@ const Hero = () => {
   return (
     <section ref={ref} className="relative h-screen min-h-[640px] w-full overflow-hidden bg-ink">
       {/* Background video */}
-      <motion.div style={{ y }} className="absolute inset-0">
+      <motion.div style={{ y }} className="absolute inset-0 bg-ink">
         <video
           autoPlay
           muted
           loop
           playsInline
-          poster={`${getImagePrefix()}images/photos/mount-cameroon.jpg`}
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src={`${getImagePrefix()}videos/waka.mp4`} type="video/mp4" />
