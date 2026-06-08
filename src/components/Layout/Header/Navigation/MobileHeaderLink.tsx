@@ -4,7 +4,7 @@ import Link from "next/link";
 import { HeaderItem } from "../../../../types/menu";
 import { usePathname } from "next/navigation";
 
-const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
+const MobileHeaderLink: React.FC<{ item: HeaderItem; onClose?: () => void }> = ({ item, onClose }) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const path = usePathname();
 
@@ -12,7 +12,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
     <div className="relative w-full">
       <Link
         href={item.href}
-        onClick={item.submenu ? () => setSubmenuOpen(!submenuOpen) : undefined}
+        onClick={item.submenu ? () => setSubmenuOpen(!submenuOpen) : onClose}
         className={`flex items-center justify-between w-full py-3 text-18 font-medium border-b border-dark_border border-opacity-10 transition-colors duration-200 ${
           path === item.href ? "text-primary" : "text-muted hover:text-primary"
         }`}
@@ -43,6 +43,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
             <Link
               key={index}
               href={subItem.href}
+              onClick={onClose}
               className="block px-4 py-2 text-muted text-16 hover:text-primary transition-colors duration-150"
             >
               {subItem.label}

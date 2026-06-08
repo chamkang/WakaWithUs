@@ -70,12 +70,12 @@ const Header: React.FC = () => {
             {/* Mobile hamburger */}
             <button
               onClick={() => setNavbarOpen(!navbarOpen)}
-              className="block lg:hidden p-2 rounded-lg"
+              className="flex lg:hidden flex-col items-center justify-center gap-[5px] w-11 h-11 rounded-xl bg-white/10 border border-white/25 backdrop-blur-sm active:scale-95 transition-transform"
               aria-label="Toggle mobile menu"
             >
-              <span className="block w-6 h-0.5 bg-white"></span>
-              <span className="block w-6 h-0.5 bg-white mt-1.5"></span>
-              <span className="block w-6 h-0.5 bg-white mt-1.5"></span>
+              <span className="block w-6 h-[3px] rounded-full bg-white"></span>
+              <span className="block w-6 h-[3px] rounded-full bg-white"></span>
+              <span className="block w-6 h-[3px] rounded-full bg-white"></span>
             </button>
           </div>
         </div>
@@ -108,7 +108,7 @@ const Header: React.FC = () => {
 
           <nav className="flex flex-col items-start p-6 gap-2">
             {headerData.map((item, index) => (
-              <MobileHeaderLink key={index} item={item} />
+              <MobileHeaderLink key={index} item={item} onClose={() => setNavbarOpen(false)} />
             ))}
             <div className="mt-6 w-full flex items-center justify-between gap-3">
               <Link
