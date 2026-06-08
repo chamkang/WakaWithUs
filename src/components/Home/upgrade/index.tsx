@@ -4,12 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { testimonialsData } from "@/app/api/data";
 
-const photos = [
-  "/images/photos/culture-portrait.jpg",
-  "/images/photos/highlands.jpg",
-  "/images/photos/mount-cameroon.jpg",
-  "/images/photos/coast-kribi.jpg",
-];
+const FALLBACK = "/images/photos/coast-kribi.jpg";
 
 const Testimonials = () => {
   const [i, setI] = useState(0);
@@ -54,7 +49,7 @@ const Testimonials = () => {
                   transition={{ duration: 0.6 }}
                   className="absolute inset-0"
                 >
-                  <Image src={photos[i % photos.length]} alt={t.name} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+                  <Image src={(t as { image?: string }).image || FALLBACK} alt={t.name} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
                 </motion.div>
               </AnimatePresence>
             </div>
