@@ -2,10 +2,14 @@ import React from "react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import BlogCard from "./blogCard";
-import { getAllPosts } from "@/utils/markdown";
+import { blog } from "@/content";
 
 const BlogPreview: React.FC = () => {
-  const posts = getAllPosts(["title", "date", "excerpt", "coverImage", "slug"]).slice(0, 3);
+  const posts = [...blog]
+    .sort((a, b) => (a.date > b.date ? -1 : 1))
+    .slice(0, 3);
+
+  if (posts.length === 0) return null;
 
   return (
     <section className="py-24 md:py-32 bg-white" id="blog">
@@ -42,14 +46,9 @@ const BlogPreview: React.FC = () => {
 
         {/* Blog cards */}
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
-          {posts.map((blog, i) => (
-            <div
-              key={i}
-              data-aos="fade-up"
-              data-aos-delay={`${200 + i * 100}`}
-              data-aos-duration="800"
-            >
-              <BlogCard blog={blog} index={i} />
+          {posts.map((post, i) => (
+            <div key={i} data-aos="fade-up" data-aos-delay={`${200 + i * 100}`} data-aos-duration="800">
+              <BlogCard blog={post} index={i} />
             </div>
           ))}
         </div>

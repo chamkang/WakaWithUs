@@ -1,97 +1,52 @@
 import type { Metadata } from "next";
-import { getAllPosts } from "@/utils/markdown";
-import BlogCard from "@/components/SharedComponent/Blog/blogCard";
+import Image from "next/image";
 import Link from "next/link";
+import BlogCard from "@/components/SharedComponent/Blog/blogCard";
+import { blog } from "@/content";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Travel guides, destination stories, cultural insights, and trip inspiration from across Cameroon.",
+    "Travel stories, trip recaps and behind-the-scenes from WakaWithUs journeys across Cameroon.",
 };
 
-const categories = [
-  "All",
-  "Travel Tips",
-  "Destination Guides",
-  "Culture",
-  "Food",
-  "Wildlife",
-  "News",
-];
-
 export default function BlogPage() {
-  const posts = getAllPosts(["title", "date", "excerpt", "coverImage", "slug"]);
+  const posts = [...blog].sort((a, b) => (a.date > b.date ? -1 : 1));
 
   return (
-    <main>
+    <main className="bg-white">
       {/* Hero */}
-      <section className="bg-darkmode pt-40 pb-16 relative overflow-hidden">
-        <div className="absolute w-96 h-96 bg-primary opacity-10 blur-400 rounded-full -top-20 -right-20" />
-        <div className="container mx-auto lg:max-w-screen-xl px-4 relative z-1">
-          <p className="text-primary font-cormorant italic text-24 mb-3">
-            Travel Inspiration
-          </p>
-          <h1 className="font-playfair font-bold text-white text-54 md:text-70 mb-5">
-            Our Travel Journal
+      <section className="relative h-[50vh] min-h-[360px] flex items-end overflow-hidden">
+        <Image src="/images/photos/waka.jpeg" alt="WakaWithUS travellers" fill priority sizes="100vw" className="object-cover" style={{ objectPosition: "center 30%" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(20,12,4,0.9) 0%, rgba(20,12,4,0.25) 60%, rgba(20,12,4,0.4) 100%)" }} />
+        <div className="container mx-auto lg:max-w-screen-xl px-4 relative z-10 pb-14">
+          <span className="text-white/80 text-13 font-semibold uppercase tracking-[0.3em] flex items-center gap-3 mb-5">
+            <span className="w-8 h-px bg-white/50" />
+            Travel journal
+          </span>
+          <h1 className="font-playfair font-bold text-white" style={{ fontSize: "clamp(2.4rem, 5vw, 4.5rem)", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+            Stories from the road
           </h1>
-          <p className="text-muted text-opacity-70 text-18 max-w-xl">
-            Destination guides, cultural stories, travel tips, and behind-the-scenes
-            from our adventures across Cameroon.
+          <p className="text-white/75 text-18 max-w-xl mt-5">
+            Trip recaps, destination notes and behind-the-scenes from our adventures across Cameroon.
           </p>
-        </div>
-      </section>
-
-      {/* Category filters */}
-      <section className="bg-ivory border-b border-border py-5">
-        <div className="container mx-auto lg:max-w-screen-xl px-4">
-          <div className="flex items-center gap-3 overflow-x-auto">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                className={`px-4 py-1.5 rounded-full text-15 font-medium whitespace-nowrap transition-colors duration-200 ${
-                  cat === "All"
-                    ? "bg-primary text-white"
-                    : "bg-white border border-border text-caramel hover:border-primary hover:text-primary"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Blog grid */}
-      <section className="bg-ivory py-16">
+      <section className="bg-cloud py-16 md:py-24">
         <div className="container mx-auto lg:max-w-screen-xl px-4">
           {posts.length > 0 ? (
-            <>
-              {/* Featured post — first/latest */}
-              <div className="mb-12">
-                <BlogCard blog={posts[0]} />
-              </div>
-
-              {/* Rest of posts */}
-              {posts.length > 1 && (
-                <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8">
-                  {posts.slice(1).map((post, i) => (
-                    <BlogCard key={i} blog={post} />
-                  ))}
-                </div>
-              )}
-            </>
+            <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8">
+              {posts.map((post, i) => (
+                <BlogCard key={i} blog={post} index={i} />
+              ))}
+            </div>
           ) : (
             <div className="text-center py-20">
-              <p className="font-playfair font-bold text-midnight_text text-30 mb-4">
-                Stories coming soon
-              </p>
-              <p className="text-caramel text-18 mb-6">
-                Our team is working on destination guides and travel stories.
-              </p>
-              <Link
-                href="/"
-                className="inline-block bg-primary text-white font-medium px-8 py-3 rounded-lg hover:bg-mid_brown transition-colors duration-200"
-              >
+              <p className="font-playfair font-bold text-ink text-30 mb-4">Stories coming soon</p>
+              <p className="text-stone text-18 mb-6">We&apos;re writing up our latest adventures — check back soon.</p>
+              <Link href="/" className="inline-block bg-forest text-white font-medium px-8 py-3 rounded-full hover:bg-forest_dark transition-colors duration-200">
                 Back to Home
               </Link>
             </div>

@@ -14,9 +14,11 @@ export const services = site.services;
 export const about = site.about;
 export const testimonials = site.testimonials;
 export const faq = site.faq;
+export const blog = site.blog;
 
 export type Trip = (typeof site.trips)[number];
 export type Testimonial = (typeof site.testimonials)[number];
 export type Service = (typeof site.services)[number];
+export type BlogPost = (typeof site.blog)[number];
 
 export default site;
